@@ -5,12 +5,12 @@ var merge = require('merge');
 var defaults = {
     paths: {
         dest: {
-            regex: new RegExp('(.*)((?:^|\/)web\/.*)(source(?:$|\/))(.*)'),
-            replacement: '$1$2$4'
+            regex: new RegExp('(.*)(^|\/)(source)($|\/)(.*)'),
+            replacement: '$1$2web$4$5'
         },
         src: {
-            js: './**/web/**/source/**/*.js',
-            sass: './**/web/**/source/**/*.scss'
+            js: './**/source/**/*.js',
+            sass: './**/source/**/*.scss'
         }
     }
 };
