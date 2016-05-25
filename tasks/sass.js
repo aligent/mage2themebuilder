@@ -1,12 +1,12 @@
+/* jshint node: true */
 'use strict';
 
-var args = require('yargs').argv,   // Pass agruments using the command line
+var _ = require('lodash'),
     autoprefixer = require('gulp-autoprefixer'),    // Add vendor prefixes to CSS
     autoprefixerDefaults,
     browserSync = require('browser-sync'),
     cleanCss = require('gulp-clean-css'), // Minify and optimise CSS
     cleanCssDefaults,
-    merge = require('merge'),
     passthrough = require('gulp-empty'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),    // Compile CSS from .scss
@@ -31,32 +31,32 @@ autoprefixerDefaults = {
 cleanCssDefaults =  { };
 
 sassDefaults = {
-    includePaths: ['./node_modules']
+    includePaths: ['./node_modules'],
+    name: 'sass'
 };
-
-
-// Production / development specific changes
-if (args.dev || args.develop) {
-    // Don't minify code in development
-    cleanCss = passthrough;
-} else {
-    // Don't create sourcemaps in production
-    sourcemaps = {
-        init: passthrough,
-        write: passthrough
-    };
-}
 
 
 module.exports = function (gulp, options) {
     // Set options
-    var autoprefixerOptions = merge(autoprefixerDefaults, options.autoprefixer),
-        cleanCssOptions = merge(cleanCssDefaults, options.cleanCss),
+    var autoprefixerOptions = _.merge(autoprefixerDefaults, options.autoprefixer),
+        cleanCssOptions = _.merge(cleanCssDefaults, options.cleanCss),
         paths = options.paths,
-        sassOptions = merge(sassDefaults, options.sass);
+        sassOptions = _.merge(sassDefaults, options.sass);
+
+    // Production / development specific changes
+    if (options.mode === 'development') {
+        // Don't minify code in development
+        cleanCss = passthrough;
+    } else {
+        // Don't create sourcemaps in production
+        sourcemaps = {
+            init: passthrough,
+            write: passthrough
+        };
+    }
 
     // Compile CSS from Sass/sass
-    gulp.task('sass', function () {
+    gulp.task(sassOptions.name, function () {
         return gulp.src(options.paths.src.sass)
             .pipe(sourcemaps.init())
             .pipe(sass(sassOptions).on('error', sass.logError))
@@ -71,7 +71,7 @@ module.exports = function (gulp, options) {
             .pipe(browserSync.stream());
     });
 
-    gulp.task('sass:watch', function () {
-        gulp.watch(paths.src.sass, ['sass']);     // TODO consider changing to gulp-watch so new files are detected
+    gulp.task(sassOptions.name + ':watch', function () {
+        gulp.watch(paths.src.sass, [sassOptions.name]);     // TODO consider changing to gulp-watch so new files are detected
     });
 };
