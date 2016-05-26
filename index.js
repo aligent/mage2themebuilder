@@ -1,8 +1,13 @@
+/* jshint node: true */
 'use strict';
 
-var merge = require('merge');
+var _ = require('lodash');
 
-var defaults = {
+var defaults,
+    isDevelopment;
+
+
+defaults = {
     paths: {
         dest: {
             regex: new RegExp('(.*)(^|\/)(source)($|\/)(.*)'),
@@ -15,12 +20,27 @@ var defaults = {
     }
 };
 
+isDevelopment = process.argv.some(function (arg) {
+    var re = /^\-\-(dev|development)$/;
+
+    return re.test(arg);
+});
 
 
 module.exports = function (gulp, options) {
-    options = merge(defaults, options);
+    options = _.merge(defaults, options);
+
+    // Set the mode to development, if required
+    if (isDevelopment) {
+        options.mode = 'development';
+    }
 
     require('./tasks/browser-sync')(gulp, options);
+    require('./tasks/cache-flush')(gulp, options);
     require('./tasks/javascript')(gulp, options);
     require('./tasks/sass')(gulp, options);
+
+    return {
+        isDevelopment: isDevelopment
+    };
 };

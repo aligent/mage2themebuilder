@@ -1,23 +1,27 @@
+/* jshint node: true */
 'use strict';
 
-var browserSync = require('browser-sync'),     // Automatically refresh the browser
-    browserSyncDefaults,
-    merge = require('merge');
+var _ = require('lodash'),
+    browserSync = require('browser-sync'),     // Automatically refresh the browser
+    browserSyncDefaults;
 
 
 // Set module defaults
 browserSyncDefaults = {
+    name: 'serve',
     open: false
 };
 
 
 module.exports = function(gulp, options) {
-    // Set options
-    var browserSyncOptions = merge(browserSyncDefaults, options.browserSync),
+    var browserSyncOptions = {},
         paths = options.paths;
 
+    // Set options
+    _.merge(browserSyncOptions, browserSyncDefaults, options.browserSync),
+
     // Serve local files using browserSync
-    gulp.task('serve', function () {
+    gulp.task(browserSyncOptions.name, function () {
         // Add host rewrite if using proxy to make sure assets are all served
         // from the same source
         if (typeof browserSyncOptions.proxy !== 'undefined') {
