@@ -2,6 +2,7 @@
 'use strict';
 
 var _ = require('lodash'),
+    browserSync = require('browser-sync'),
     passthrough = require('gulp-empty'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify'),    // Mangle and compress JavaScript
@@ -39,7 +40,8 @@ module.exports = function (gulp, options) {
                 path.dirname = path.dirname.replace(paths.dest.regex, paths.dest.replacement);
             }))
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('./'));
+            .pipe(gulp.dest('./'))
+            .on('end', browserSync.reload);
     });
 
     gulp.task(javascriptOptions.name + ':watch', function () {

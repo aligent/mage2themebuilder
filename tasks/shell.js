@@ -4,10 +4,12 @@
 const exec = require('child_process').exec;
 
 var _ = require('lodash'),
+    browserSync = require('browser-sync'),
     shellDefaults;
 
 shellDefaults = {
     name: 'shell',
+    reload: true,
     run: {
         development: true,
         production: false
@@ -21,7 +23,7 @@ shellDefaults = {
         name: '',
         path: '/vagrant/'
     },
-    watchPath: false,
+    watchPath: false
 };
 
 
@@ -49,7 +51,6 @@ module.exports = function (gulp, options) {
             exec(command, function (error, stdout, stderr) {
                 if (error) {
                     done(error);
-                    return;
                 }
 
                 console.log(stdout);
@@ -59,10 +60,14 @@ module.exports = function (gulp, options) {
                     console.log(shellOptions.task.endMessage);
                 }
 
-                done();
+                if (shellOptions.reload) {
+                    browserSync.reload();
+                }
+
+                done(null);
             });
         } else {
-            done();
+            done(null);
         }
     });
 
