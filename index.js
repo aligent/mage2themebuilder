@@ -26,8 +26,6 @@ isDevelopment = process.argv.some(function (arg) {
     return re.test(arg);
 });
 
-console.log(isDevelopment);
-
 
 module.exports = function (gulp, options) {
     options = _.merge(defaults, options);
@@ -38,6 +36,11 @@ module.exports = function (gulp, options) {
     }
 
     require('./tasks/browser-sync')(gulp, options);
+    require('./tasks/cache-flush')(gulp, options);
     require('./tasks/javascript')(gulp, options);
     require('./tasks/sass')(gulp, options);
+
+    return {
+        isDevelopment: isDevelopment
+    };
 };
