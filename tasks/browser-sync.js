@@ -14,9 +14,11 @@ browserSyncDefaults = {
 
 
 module.exports = function(gulp, options) {
-    // Set options
-    var browserSyncOptions = _.merge(browserSyncDefaults, options.browserSync),
+    var browserSyncOptions = {},
         paths = options.paths;
+
+    // Set options
+    _.merge(browserSyncOptions, browserSyncDefaults, options.browserSync),
 
     // Serve local files using browserSync
     gulp.task(browserSyncOptions.name, function () {

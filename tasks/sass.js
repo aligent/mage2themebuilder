@@ -37,11 +37,15 @@ sassDefaults = {
 
 
 module.exports = function (gulp, options) {
-    // Set options
-    var autoprefixerOptions = _.merge(autoprefixerDefaults, options.autoprefixer),
-        cleanCssOptions = _.merge(cleanCssDefaults, options.cleanCss),
+    var autoprefixerOptions = {},
+        cleanCssOptions = {},
         paths = options.paths,
-        sassOptions = _.merge(sassDefaults, options.sass);
+        sassOptions = {};
+
+    // Set options
+    _.merge(autoprefixerOptions, autoprefixerDefaults, options.autoprefixer);
+    _.merge(cleanCssOptions, cleanCssDefaults, options.cleanCss);
+    _.merge(sassOptions, sassDefaults, options.sass);
 
     // Production / development specific changes
     if (options.mode === 'development') {

@@ -21,16 +21,16 @@ shellDefaults = {
         name: '',
         path: '/vagrant/'
     },
-    watchPath: false
+    watchPath: false,
 };
 
 
 module.exports = function (gulp, options) {
-    // Set options
     var command = '',
-        shellOptions = _.merge(shellDefaults, options.shell);
+        shellOptions = {};
 
-    // Set the default value for `run` based on the development mode
+    // Set options
+    _.merge(shellOptions, shellDefaults, options.shell);
 
     // Build the shell command
     command += shellOptions.task.command;

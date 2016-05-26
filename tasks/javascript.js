@@ -13,9 +13,11 @@ var javascriptDefaults = {
 
 
 module.exports = function (gulp, options) {
-    // Set options
-    var javascriptOptions = _.merge(javascriptDefaults, options.javascript),
+    var javascriptOptions = {},
         paths = options.paths;
+
+    // Set options
+    _.merge(javascriptOptions, javascriptDefaults, options.javascript);
 
     // Production / development specific changes
     if (options.mode === 'development') {
