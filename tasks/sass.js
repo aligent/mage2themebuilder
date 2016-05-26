@@ -72,7 +72,7 @@ module.exports = function (gulp, options) {
             }))
             .pipe(sourcemaps.write())
             .pipe(gulp.dest('./'))
-            .pipe(browserSync.stream());
+            .pipe(browserSync.stream({match: '**/*.css'}));
     });
 
     gulp.task(sassOptions.name + ':watch', function () {
