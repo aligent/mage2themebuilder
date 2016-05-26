@@ -15,9 +15,10 @@ shellDefaults = {
         production: false
     },
     task: {
-        //command: 'bin/magento cache:clean layout',
-        //startMessage: 'Flushing layout cache...',
-        //endMessage: 'Layout cache flushed'
+        // For example:
+        // command: 'bin/magento cache:flush layout',
+        // startMessage: 'Flushing layout cache...',
+        // endMessage: 'Layout cache flushed'
     },
     vagrant: {
         name: '',
@@ -33,6 +34,10 @@ module.exports = function (gulp, options) {
 
     // Set options
     _.merge(shellOptions, shellDefaults, options.shell);
+
+    if (!('command' in shellOptions.task)) {
+        return;
+    }
 
     // Build the shell command
     command += shellOptions.task.command;
