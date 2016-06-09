@@ -33,7 +33,7 @@ module.exports = function (gulp, options) {
     }
 
     gulp.task(javascriptOptions.name, function () {
-        return gulp.src(options.paths.src.js)
+        return gulp.src(options.paths.src.js, {base: './'})
             .pipe(sourcemaps.init())
             .pipe(uglify())
             .pipe(rename(function (path) {  // Replace the source paths with destination ones
