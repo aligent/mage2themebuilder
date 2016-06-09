@@ -13,25 +13,25 @@ cacheFlushDefaults = {
     },
     tasks: [
         {
-            command: 'bin/magento cache:flush layout',
+            command: 'bin/magento cache:flush layout full_page',
             name: 'cache:flush:layout',
             startMessage: 'Flushing layout cache...',
             endMessage: 'Layout cache flushed',
-            watchPath:'./**/layout/**/*.xml'
+            watchPath:'./app/**/layout/**/*.xml'
         },
         {
-            command: 'bin/magento cache:flush block_html',
+            command: 'bin/magento cache:flush block_html full_page',
             name: 'cache:flush:html',
             startMessage: 'Flushing block HTML cache...',
             endMessage: 'Block HTML cache flushed',
-            watchPath: './**/templates/**/*.phtml'
+            watchPath: './app/**/templates/**/*.phtml'
         },
         {
-            command: 'bin/magento cache:flush translate',
+            command: 'bin/magento cache:flush translate full_page',
             name: 'cache:flush:translate',
             startMessage: 'Flushing translation cache...',
             endMessage: 'Translation cache flushed',
-            watchPath: './**/i18n/**/*.csv'
+            watchPath: './app/**/i18n/**/*.csv'
         }
     ]
 };
