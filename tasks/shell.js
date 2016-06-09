@@ -35,6 +35,9 @@ module.exports = function (gulp, options) {
     // Set options
     _.merge(shellOptions, shellDefaults, options.shell);
 
+    // Merge global Vagrant options with local ones
+    _.merge(shellOptions.vagrant, options.vagrant);
+
     if (!('command' in shellOptions.task)) {
         return;
     }
@@ -43,8 +46,11 @@ module.exports = function (gulp, options) {
     command += shellOptions.task.command;
 
     if ('vagrant' in shellOptions) {
-        command =  shellOptions.vagrant.path + command;
-        command = 'vagrant ssh ' + shellOptions.vagrant.name + ' --command "' + command.replace(/\"/g, '\\"') + '"';
+        // Allow Vagrant to be bypassed by individual tasks
+        if (shellOptions.vagrant !== false) {
+            command = shellOptions.vagrant.path + command;
+            command = 'vagrant ssh ' + shellOptions.vagrant.name + ' --command "' + command.replace(/\"/g, '\\"') + '"';
+        }
     }
 
     gulp.task(shellOptions.name, function (done) {

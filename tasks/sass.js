@@ -61,7 +61,7 @@ module.exports = function (gulp, options) {
 
     // Compile CSS from Sass/sass
     gulp.task(sassOptions.name, function () {
-        return gulp.src(options.paths.src.sass)
+        return gulp.src(options.paths.src.sass, {base: './'})
             .pipe(sourcemaps.init())
             .pipe(sass(sassOptions).on('error', sass.logError))
             .pipe(autoprefixer(autoprefixerOptions))

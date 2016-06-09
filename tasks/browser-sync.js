@@ -18,7 +18,22 @@ module.exports = function(gulp, options) {
         paths = options.paths;
 
     // Set options
-    _.merge(browserSyncOptions, browserSyncDefaults, options.browserSync),
+    _.merge(browserSyncOptions, browserSyncDefaults, options.browserSync);
+
+    // Set/override the proxy option via command line argument
+    process.argv.forEach(function (arg) {
+        var match,
+            re = /^\-\-proxy\=\"?([A-Za-z0-9\.]+)\"?/;
+
+        match = re.exec(arg);
+
+        if (match !== null) {
+            browserSyncOptions.proxy = match[1];
+            return true;
+        } else {
+            return false;
+        }
+    });
 
     // Serve local files using browserSync
     gulp.task(browserSyncOptions.name, function () {
