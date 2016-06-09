@@ -20,7 +20,6 @@ module.exports = function(gulp, options) {
     // Set options
     _.merge(browserSyncOptions, browserSyncDefaults, options.browserSync);
 
-
     // Set/override the proxy option via command line argument
     process.argv.forEach(function (arg) {
         var match,
