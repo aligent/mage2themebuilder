@@ -28,8 +28,4 @@ module.exports = function (gulp, options) {
             .pipe(sourcemaps.write())
             .pipe(gulp.dest('./'));
     });
-
-    gulp.task(imagesOptions.name + ':watch', function () {
-        gulp.watch(paths.src.js, [imagesOptions.name]);     // TODO consider changing to gulp-watch so new files are detected
-    });
 };
