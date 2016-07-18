@@ -20,12 +20,10 @@ module.exports = function (gulp, options) {
 
     gulp.task(imagesOptions.name, function () {
         return gulp.src(options.paths.src.images, {base: './'})
-            .pipe(sourcemaps.init())
             .pipe(imagemin())
             .pipe(rename(function (path) {  // Replace the source paths with destination ones
                 path.dirname = path.dirname.replace(paths.dest.regex, paths.dest.replacement);
             }))
-            .pipe(sourcemaps.write())
             .pipe(gulp.dest('./'));
     });
 };
