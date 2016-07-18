@@ -16,7 +16,8 @@ defaults = {
         },
         src: {
             js: './app/design/frontend/**/source/**/*.js',
-            sass: './app/design/frontend/**/source/**/*.scss'
+            sass: './app/design/frontend/**/source/**/*.scss',
+            images: './app/design/frontend/**/source/images/*'
         }
     }
 };
@@ -64,6 +65,7 @@ module.exports = function (gulp, options) {
     require('./tasks/cache-flush')(gulp, options);
     require('./tasks/javascript')(gulp, options);
     require('./tasks/sass')(gulp, options);
+    require('./tasks/images')(gulp, options);
 
     return {
         isDevelopment: isDevelopment
