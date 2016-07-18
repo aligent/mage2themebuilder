@@ -3,8 +3,7 @@
 
 var _ = require('lodash'),
     imagemin = require('gulp-imagemin'),
-    rename = require('gulp-rename'),
-    sourcemaps = require('gulp-sourcemaps');
+    rename = require('gulp-rename');
 
 var imagesDefaults = {
     name: 'images'
