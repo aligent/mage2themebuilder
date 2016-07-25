@@ -6,7 +6,9 @@ var _ = require('lodash'),
     passthrough = require('gulp-empty'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify'),    // Mangle and compress JavaScript
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    babel = require('gulp-babel'),
+    es2015 = require('babel-preset-es2015');
 
 var javascriptDefaults = {
     name: 'javascript'
@@ -35,6 +37,9 @@ module.exports = function (gulp, options) {
     gulp.task(javascriptOptions.name, function () {
         return gulp.src(options.paths.src.js, {base: './'})
             .pipe(sourcemaps.init())
+	    .pipe(babel({
+                presets: [es2015]
+            }))
             .pipe(uglify())
             .pipe(rename(function (path) {  // Replace the source paths with destination ones
                 path.dirname = path.dirname.replace(paths.dest.regex, paths.dest.replacement);
