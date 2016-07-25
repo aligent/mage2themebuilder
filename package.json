@@ -1,15 +1,17 @@
 {
   "name": "aligent-theme-builder",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Magento 2 Gulp-based theme builder",
   "author": "Tim Swalling <tim@aligent.com.au>",
   "private": true,
   "repository": "git@git.assembla.com:aligent.theme-builder.git",
   "main": "index.js",
   "dependencies": {
+    "babel-preset-es2015": "^6.9.0",
     "browser-sync": "^2.12.8",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.0.2",
+    "gulp-babel": "^6.1.2",
     "gulp-clean-css": "^2.0.7",
     "gulp-empty": "^0.1.1",
     "gulp-imagemin": "^3.0.1",
