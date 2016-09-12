@@ -1,6 +1,6 @@
 {
   "name": "aligent-theme-builder",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Magento 2 Gulp-based theme builder",
   "author": "Tim Swalling <tim@aligent.com.au>",
   "private": true,
