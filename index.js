@@ -4,6 +4,7 @@
 var _ = require('lodash');
 
 var defaults,
+    isDebug,
     isDevelopment,
     noLocal;
 
@@ -19,12 +20,19 @@ defaults = {
             sass: './app/design/frontend/**/source/**/*.scss',
             images: './app/design/frontend/**/source/images/*'
         }
-    }
+    },
+    debug: false
 };
 
 // Command line argument to set development mode
 isDevelopment = process.argv.some(function (arg) {
     var re = /^\-\-(dev|development)$/;
+
+    return re.test(arg);
+});
+
+isDebug = process.argv.some(function (arg) {
+    var re = /^\-\-(debug)$/;
 
     return re.test(arg);
 });
@@ -59,6 +67,10 @@ module.exports = function (gulp, options) {
     // Set the mode to development, if required
     if (isDevelopment) {
         options.mode = 'development';
+    }
+
+    if (isDebug) {
+        options.debug = true;
     }
 
     require('./tasks/browser-sync')(gulp, options);

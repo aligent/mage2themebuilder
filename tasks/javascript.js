@@ -8,6 +8,7 @@ var _ = require('lodash'),
     sourcemaps = require('gulp-sourcemaps'),
     babel = require('gulp-babel'),
     es2015 = require('babel-preset-es2015'),
+    debug = require('gulp-debug'),
     gulpIf = require('gulp-if');
 
 var javascriptDefaults = {
@@ -24,6 +25,7 @@ module.exports = function (gulp, options) {
 
     gulp.task(javascriptOptions.name, function () {
         return gulp.src(options.paths.src.js, {base: './'})
+        .pipe(gulpIf(options.debug, debug({title: javascriptOptions.name})))
         .pipe(gulpIf(options.mode === 'development', sourcemaps.init())) // Don't create sourcemaps in production
         .pipe(babel({
             presets: [es2015]
