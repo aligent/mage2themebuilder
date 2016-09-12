@@ -7,11 +7,12 @@ var _ = require('lodash'),
     browserSync = require('browser-sync'),
     cleanCss = require('gulp-clean-css'), // Minify and optimise CSS
     cleanCssDefaults,
-    passthrough = require('gulp-empty'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),    // Compile CSS from .scss
     sassDefaults,
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    debug = require('gulp-debug'),
+    gulpIf = require('gulp-if');
 
 
 // Set defaults
@@ -47,30 +48,19 @@ module.exports = function (gulp, options) {
     _.merge(cleanCssOptions, cleanCssDefaults, options.cleanCss);
     _.merge(sassOptions, sassDefaults, options.sass);
 
-    // Production / development specific changes
-    if (options.mode === 'development') {
-        // Don't minify code in development
-        cleanCss = passthrough;
-    } else {
-        // Don't create sourcemaps in production
-        sourcemaps = {
-            init: passthrough,
-            write: passthrough
-        };
-    }
-
     // Compile CSS from Sass/sass
     gulp.task(sassOptions.name, function () {
         return gulp.src(options.paths.src.sass, {base: './'})
-            .pipe(sourcemaps.init())
+            .pipe(gulpIf(options.debug, debug({title: sassOptions.name})))
+            .pipe(gulpIf(options.mode === 'development', sourcemaps.init())) // Don't create sourcemaps in production
             .pipe(sass(sassOptions).on('error', sass.logError))
             .pipe(autoprefixer(autoprefixerOptions))
-            .pipe(cleanCss(cleanCssOptions))  // Minify if in production mode
+            .pipe(gulpIf(options.mode !== 'development', cleanCss(cleanCssOptions)))  // Minify if in production mode
             .pipe(rename(function (path) {  // Replace the source paths with destination ones
                 path.dirname = path.dirname.replace(paths.dest.regex, paths.dest.replacement);
                 path.dirname = path.dirname.replace(/(\/|^)(sass|scss)(\/|$)/gi, '$1css$3');
             }))
-            .pipe(sourcemaps.write())
+            .pipe(gulpIf(options.mode === 'development', sourcemaps.write())) // Don't create sourcemaps in production
             .pipe(gulp.dest('./'))
             .pipe(browserSync.stream({match: '**/*.css'}));
     });

@@ -3,7 +3,9 @@
 
 var _ = require('lodash'),
     imagemin = require('gulp-imagemin'),
-    rename = require('gulp-rename');
+    rename = require('gulp-rename'),
+    debug = require('gulp-debug'),
+    gulpIf = require('gulp-if');
 
 var imagesDefaults = {
     name: 'images'
@@ -19,6 +21,7 @@ module.exports = function (gulp, options) {
 
     gulp.task(imagesOptions.name, function () {
         return gulp.src(options.paths.src.images, {base: './'})
+            .pipe(gulpIf(options.debug, debug({title: imagesOptions.name})))
             .pipe(imagemin())
             .pipe(rename(function (path) {  // Replace the source paths with destination ones
                 path.dirname = path.dirname.replace(paths.dest.regex, paths.dest.replacement);
