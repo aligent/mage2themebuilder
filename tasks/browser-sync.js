@@ -2,6 +2,7 @@
 'use strict';
 
 var _ = require('lodash'),
+    watch = require('gulp-watch'),
     browserSync = require('browser-sync'),     // Automatically refresh the browser
     browserSyncDefaults;
 
