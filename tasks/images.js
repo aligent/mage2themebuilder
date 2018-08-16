@@ -5,6 +5,7 @@ var _ = require('lodash'),
     imagemin = require('gulp-imagemin'),
     rename = require('gulp-rename'),
     debug = require('gulp-debug'),
+    watch = require('gulp-watch'),
     gulpIf = require('gulp-if');
 
 var imagesDefaults = {
