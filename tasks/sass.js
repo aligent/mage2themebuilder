@@ -13,7 +13,7 @@ var _ = require('lodash'),
     sourcemaps = require('gulp-sourcemaps'),
     debug = require('gulp-debug'),
     gulpIf = require('gulp-if'),
-    watch = require('gulp-watch);
+    watch = require('gulp-watch');
 
 
 // Set defaults
