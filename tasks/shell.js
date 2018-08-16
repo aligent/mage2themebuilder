@@ -5,6 +5,7 @@ const exec = require('child_process').exec;
 
 var _ = require('lodash'),
     browserSync = require('browser-sync'),
+    watch = require('gulp-watch'),
     shellDefaults;
 
 shellDefaults = {
@@ -84,7 +85,9 @@ module.exports = function (gulp, options) {
 
     if (shellOptions.watchPath) {
         gulp.task(shellOptions.name + ':watch', function () {
-            gulp.watch(shellOptions.watchPath, [shellOptions.name]);     // TODO consider changing to gulp-watch so new files are detected
+            watch(shellOptions.watchPath, function (){
+                gulp.start(shellOptions.name);
+            });
         });
     }
 };

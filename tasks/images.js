@@ -5,6 +5,7 @@ var _ = require('lodash'),
     imagemin = require('gulp-imagemin'),
     rename = require('gulp-rename'),
     debug = require('gulp-debug'),
+    watch = require('gulp-watch'),
     gulpIf = require('gulp-if');
 
 var imagesDefaults = {
@@ -27,5 +28,11 @@ module.exports = function (gulp, options) {
                 path.dirname = path.dirname.replace(paths.dest.regex, paths.dest.replacement);
             }))
             .pipe(gulp.dest('./'));
+    });
+    
+    gulp.task(imagesOptions.name + ':watch', function () {
+        watch(options.paths.src.images, function() {
+            gulp.start(imagesOptions.name);
+        });
     });
 };
