@@ -9,7 +9,8 @@ var _ = require('lodash'),
     babel = require('gulp-babel'),
     es2015 = require('babel-preset-es2015'),
     debug = require('gulp-debug'),
-    gulpIf = require('gulp-if');
+    gulpIf = require('gulp-if'),
+    watch = require('gulp-watch');
 
 var javascriptDefaults = {
     name: 'javascript'
@@ -40,6 +41,8 @@ module.exports = function (gulp, options) {
     });
 
     gulp.task(javascriptOptions.name + ':watch', function () {
-        gulp.watch(paths.src.js, [javascriptOptions.name]);     // TODO consider changing to gulp-watch so new files are detected
+        watch(paths.src.js, function () {
+            gulp.start(javascriptOptions.name);
+        });
     });
 };
