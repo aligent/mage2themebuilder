@@ -12,7 +12,8 @@ var _ = require('lodash'),
     sassDefaults,
     sourcemaps = require('gulp-sourcemaps'),
     debug = require('gulp-debug'),
-    gulpIf = require('gulp-if');
+    gulpIf = require('gulp-if'),
+    watch = require('gulp-watch);
 
 
 // Set defaults
@@ -66,6 +67,8 @@ module.exports = function (gulp, options) {
     });
 
     gulp.task(sassOptions.name + ':watch', function () {
-        gulp.watch(paths.src.sass, [sassOptions.name]);     // TODO consider changing to gulp-watch so new files are detected
+        watch(paths.src.sass, function () {
+            gulp.start(sassOptions.name);
+        });
     });
 };
