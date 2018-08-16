@@ -28,4 +28,10 @@ module.exports = function (gulp, options) {
             }))
             .pipe(gulp.dest('./'));
     });
+    
+    gulp.task(imagesOptions.name + ':watch', function () {
+        watch(options.paths.src.images, function() {
+            gulp.start(imagesOptions.name);
+        });
+    });
 };
