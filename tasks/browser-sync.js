@@ -60,6 +60,6 @@ module.exports = function(gulp, options) {
 
         browserSync.init(browserSyncOptions);
 
-        gulp.watch(paths.browserSync).on('change', browserSync.reload);
+        watch(paths.browserSync, browserSync.reload);
     });
 };
