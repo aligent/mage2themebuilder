@@ -2,6 +2,7 @@
 'use strict';
 
 var _ = require('lodash'),
+    watch = require('gulp-watch'),
     browserSync = require('browser-sync'),     // Automatically refresh the browser
     browserSyncDefaults;
 
@@ -60,6 +61,6 @@ module.exports = function(gulp, options) {
 
         browserSync.init(browserSyncOptions);
 
-        gulp.watch(paths.browserSync).on('change', browserSync.reload);
+        watch(paths.browserSync, browserSync.reload);
     });
 };
